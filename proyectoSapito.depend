@@ -1,0 +1,8 @@
+# depslib dependency file v1.0
+1543154580 source:c:\users\dell\documents\proyectosapito\main.cpp
+	<iostream>
+	<fstream>
+	<bits/stdc++.h>
+	<conio.h>
+	<windows.h>
+
