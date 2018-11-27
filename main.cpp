@@ -106,7 +106,7 @@ void eliminar_auto(int posax,int posay)
     cout<<a<<a<<"   "<<a<<a;
 }
 
-void Movimiento_Naranja(int *posrx,int *posry)
+void movimiento_sapito(int *posrx,int *posry)
 {
      if(_kbhit())
     {
@@ -143,6 +143,7 @@ void choque(int posrx,int posry,int posax,int posay,int *muerte,int *vidas)
             {
                 *muerte=1;
                 *vidas=*vidas-1;
+                borrar_sapito(posrx,posry);
             }
             j++;
             k++;
@@ -156,37 +157,52 @@ void choque(int posrx,int posry,int posax,int posay,int *muerte,int *vidas)
             }
         }
 }
-
-void avanzar_posiciones_auto(int *posx,int *posy)
+void avanzar_posiciones_auto(int *posax,int *posay,int posrx,int posry,int *muerte,int *vidas)
 {
-    dibujar_autitos(*posx,*posy);
-    Sleep(50);
-    eliminar_auto(*posx,*posy);
-    *posx+=1;
-    dibujar_autitos(*posx,*posy);
-    if(*posx>=90)
+    dibujar_autitos(*posax,*posay);
+    Sleep(80);
+    eliminar_auto(*posax,*posay);
+    *posax+=1;
+    dibujar_autitos(*posax,*posay);
+    choque(posrx,posry,*posax,*posay,muerte,vidas);
+    if(*posax>=90)
     {
-        eliminar_auto(*posx,*posy);
-        *posx=0;
-        dibujar_autitos(*posx,*posy);
+        eliminar_auto(*posax,*posay);
+        *posax=0;
+        dibujar_autitos(*posax,*posay);
     }
 }
 int main()
 {
     int ancho=25,largo=10;
-    int posax=5,posay=3;
+    int posax=0,posay=4,posax1=20,posay1=posay+4,posax2=(rand()&8),posay2=posay1+4,posax3=(rand()&5),posay3=posay2+4;
     int vidas=3,muerte,numAut=0,limite=ancho,reloj,nivel=1;
     int fin=0,aux=0;
     int posrx=(ancho*4)/2,posry=(largo*4)+4;
     inicializar_autopista(ancho,largo);
     while(fin!=1 && posry!=2)
     {
+        muerte=0;
+        reloj=1;
+        while(muerte!=1)
+        {
             muerte=0;
             reloj=1;
             dibujar_sapito(posrx,posry);
-                avanzar_posiciones_auto(&posax,&posay);
-            Movimiento_Naranja(&posrx,&posry);
+            avanzar_posiciones_auto(&posax,&posay,posrx,posry,&muerte,&vidas);
+            avanzar_posiciones_auto(&posax1,&posay1,posrx,posry,&muerte,&vidas);
+            avanzar_posiciones_auto(&posax2,&posay2,posrx,posry,&muerte,&vidas);
+            avanzar_posiciones_auto(&posax3,&posay3,posrx,posry,&muerte,&vidas);
+            movimiento_sapito(&posrx,&posry);
             reloj++;
+        }
+        if(vidas==0){
+            fin=1;
+        }
+        else
+        {
+            posrx=(ancho*4)/2,posry=(largo*4)+4;
+        }
     }
     system("CLS");
     cout<<"GANASTE"<<endl;
