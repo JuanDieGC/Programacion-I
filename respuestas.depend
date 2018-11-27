@@ -1,0 +1,9 @@
+# depslib dependency file v1.0
+1543280252 source:c:\users\dell\documents\respuestas\main.cpp
+	<iostream>
+	<fstream>
+	<windows.h>
+	<string.h>
+	<conio.h>
+	<bits/stdc++.h>
+
